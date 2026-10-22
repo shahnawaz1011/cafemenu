@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f7f6f1">
+    <meta name="description" content="Explore the seasonal menu at Sage & Stone.">
+    <title>Sage & Stone | Menu</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        color-scheme: light;
+        --paper: #f7f6f1;
+        --ink: #20231f;
+        --muted: #72756d;
+        --green: #315c43;
+        --line: #e7e6de;
+      }
+
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        background: var(--paper);
+        color: var(--ink);
+        font-family: "DM Sans", sans-serif;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      .serif { font-family: "Playfair Display", Georgia, serif; }
+      .menu-shell { max-width: 760px; }
+      .sticky-stack { position: sticky; top: 0; z-index: 20; }
+      .category-scroller { scrollbar-width: none; }
+      .category-scroller::-webkit-scrollbar { display: none; }
+      .category-pill { border: 1px solid var(--line); background: white; color: #54574f; }
+      .category-pill.is-active { border-color: var(--green); background: var(--green); color: white; }
+      .menu-card { border-bottom: 1px solid var(--line); }
+      .menu-image { aspect-ratio: 1; object-fit: cover; }
+      .dietary-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
+      .dietary-veg { background: #48834d; }
+      .dietary-vegan { background: #2d8069; }
+      .dietary-non-veg { background: #bb5549; }
+      .unavailable { opacity: .52; }
+      .unavailable .menu-image { filter: grayscale(1); }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .menu-card { animation: arrive .28s ease both; }
+        @keyframes arrive {
+          from { opacity: 0; transform: translateY(5px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sticky-stack bg-[color:var(--paper)]/95 backdrop-blur-md">
+      <header class="menu-shell mx-auto px-5 pt-4">
+        <div class="flex items-center gap-3">
+          <div id="restaurant-logo" class="serif grid h-11 w-11 shrink-0 place-items-center rounded-full bg-[color:var(--green)] text-xl text-white" aria-hidden="true"></div>
+          <div class="min-w-0 flex-1">
+            <p class="text-[10px] font-bold uppercase tracking-[.17em] text-[color:var(--muted)]">Seasonal kitchen</p>
+            <h1 id="restaurant-name" class="serif truncate text-[21px] leading-tight"></h1>
+          </div>
+          <span class="hidden items-center gap-1.5 text-xs font-semibold text-[color:var(--green)] sm:flex">
+            <span class="h-2 w-2 rounded-full bg-[#79a56d]"></span> Open today
+          </span>
+        </div>
+        <label class="mt-4 flex h-11 items-center gap-2.5 rounded-lg border border-[color:var(--line)] bg-white px-3.5 focus-within:border-[color:var(--green)] focus-within:ring-2 focus-within:ring-[#315c43]/10">
+          <svg aria-hidden="true" class="h-[18px] w-[18px] shrink-0 text-[#777a72]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="10.8" cy="10.8" r="6.8"></circle><path d="m16 16 4.2 4.2"></path></svg>
+          <input id="menu-search" class="w-full bg-transparent text-sm outline-none placeholder:text-[#85877f]" type="search" placeholder="Find a dish" autocomplete="off" aria-label="Search menu">
+          <kbd class="hidden rounded border border-[#e7e6de] px-1.5 py-0.5 text-[10px] text-[#85877f] sm:block">MENU</kbd>
+        </label>
+      </header>
+      <nav class="menu-shell category-scroller mx-auto mt-3 flex gap-2 overflow-x-auto border-b border-[color:var(--line)] px-5 pb-3" aria-label="Menu categories" id="category-nav"></nav>
+    </div>
+
+    <main class="menu-shell mx-auto px-5 pb-12">
+      <section class="mb-6 pt-6" aria-labelledby="welcome-heading">
+        <p class="text-[10px] font-bold uppercase tracking-[.18em] text-[color:var(--green)]">Good food, grown close</p>
+        <h2 id="welcome-heading" class="serif mt-1 text-[30px] leading-tight">A taste of the season.</h2>
+        <p class="mt-1.5 text-sm text-[color:var(--muted)]">Thoughtful plates, made fresh every day.</p>
+      </section>
+      <div id="menu-content" aria-live="polite"></div>
+      <p id="empty-state" class="hidden py-16 text-center text-sm text-[color:var(--muted)]">No dishes found. Try another search.</p>
+    </main>
+
+    <footer class="border-t border-[color:var(--line)] px-5 py-5 text-center text-xs text-[color:var(--muted)]">
+      <span id="footer-name"></span> <span aria-hidden="true">·</span> Made with care, served with love
+    </footer>
+
+    <script src="menuData.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
